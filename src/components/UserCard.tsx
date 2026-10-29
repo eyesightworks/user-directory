@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import type { User } from "../features/users/userTypes";
 
 interface UserCardProps {
@@ -7,13 +8,20 @@ interface UserCardProps {
 }
 
 export default function UserCard({ user, onClick }: UserCardProps) {
+  const [failedAvatar, setFailedAvatar] = useState<string | null>(null);
+
   const initials = user.name
     .trim()
     .split(/\s+/)
+    .filter(Boolean)
     .slice(0, 2)
-    .map((part) => part[0] ?? "")
+    .map((part) => part.charAt(0))
     .join("")
     .toUpperCase();
+
+  const hasAvatar = Boolean(
+    user.avatar && failedAvatar !== user.avatar
+  );
 
   return (
     <button
@@ -22,18 +30,23 @@ export default function UserCard({ user, onClick }: UserCardProps) {
       onClick={() => onClick(user)}
       aria-label={`View details for ${user.name}`}
     >
-      {user.avatar ? (
+      {hasAvatar ? (
         <img
+          key={user.avatar}
           className="user-avatar"
           src={user.avatar}
           alt=""
           loading="lazy"
-          onError={(event) => {
-            event.currentTarget.style.display = "none";
+          decoding="async"
+          onError={() => {
+            setFailedAvatar(user.avatar ?? null);
           }}
         />
       ) : (
-        <span className="user-avatar avatar-fallback" aria-hidden="true">
+        <span
+          className="user-avatar avatar-fallback"
+          aria-hidden="true"
+        >
           {initials || "?"}
         </span>
       )}
