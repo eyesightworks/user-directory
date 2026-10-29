@@ -3,11 +3,11 @@ import { useMemo, useState } from "react";
 import { Users, UserRound, RefreshCw } from "lucide-react";
 import { useGetUsersQuery } from "./features/users/usersApi";
 import type { User } from "./features/users/userTypes";
-import UserCard from "./components/UserCard";
 import SearchBar from "./components/SearchBar";
 import UserDetailsModal from "./components/UserDetailsModal";
 import LoadingState from "./components/LoadingState";
 import ErrorState from "./components/ErrorState";
+import VirtualizedUserGrid from "./components/VirtualizedUserGrid";
 
 export default function App() {
   const {
@@ -94,15 +94,10 @@ export default function App() {
             </div>
 
             {filteredUsers.length > 0 ? (
-              <div className="user-grid">
-                {filteredUsers.map((user) => (
-                  <UserCard
-                    key={user.id}
-                    user={user}
-                    onClick={setSelectedUser}
-                  />
-                ))}
-              </div>
+              <VirtualizedUserGrid
+                users={filteredUsers}
+                onUserClick={setSelectedUser}
+              />
             ) : (
               <div className="empty-state">
                 <div className="empty-icon">
