@@ -1,34 +1,34 @@
 # User Directory
 
-A responsive, dark-mode user directory built with React, TypeScript, Redux Toolkit, RTK Query, and Vite. The application allows users to browse profiles, search by name, view detailed user information, and create new user records through an API.
+A responsive, dark-mode user directory application built with React, TypeScript, Redux Toolkit, RTK Query, and Vite. The application fetches users from the provided MockAPI, displays them in a virtualized card grid, supports client-side search, provides detailed user profiles, and allows users to create new records.
 
 ## Live Demo
 
-- **Live Website:** https://user-directory-three-lovat.vercel.app/
-- **GitHub Repository:** https://github.com/eyesightworks/user-directory
-- **Design Reference:** [Figma Design](https://www.figma.com/design/o0Qr0wIqyNmgoDm3A7Vy2k/Untitled?node-id=1-1465&t=6vvVoHc2ql7MU7IK-1)
+- **Live Website:** [User Directory](https://user-directory-three-lovat.vercel.app/)
+- **GitHub Repository:** [eyesightworks/user-directory](https://github.com/eyesightworks/user-directory)
+- **Figma Design Reference:** [View the original design](https://www.figma.com/design/o0Qr0wIqyNmgoDm3A7Vy2k/Untitled?node-id=1-1465&t=6vvVoHc2ql7MU7IK-1)
 
 ## Features
 
 - **User Directory:** Fetch and display users from the provided MockAPI endpoint.
 - **User Cards:** Display each user's avatar, full name, and email address in a card-based grid.
-- **Search:** Filter the loaded user list by name on the client side.
-- **User Details:** Open a profile modal showing available user information, including avatar, name, email, phone number, and location.
-- **Create Users:** Add new users by submitting their name, location, and date of birth.
-- **Data Fetching and Caching:** Use Redux Toolkit Query to manage API requests, loading states, caching, and data updates.
+- **Search:** Filter the loaded users by name or email on the client side.
+- **User Details:** Open a modal displaying the selected user's profile picture, full name, email, phone number, location, and date of birth when available.
+- **Create Users:** Submit new user records with a name, location, and date of birth.
+- **API Data Management:** Use Redux Toolkit Query for API requests, caching, and mutations.
 - **Virtualization:** Use `react-window` to render visible user cards efficiently.
-- **Loading and Error States:** Display loading feedback and error messages, with retry options where implemented.
-- **Responsive Design:** Provide a dark-themed interface for desktop, tablet, and mobile screens.
-- **Accessibility:** Include semantic elements, accessible labels, visible focus indicators, and keyboard dismissal of the profile modal.
+- **Loading and Error States:** Display loading indicators and error messages, with retry options where implemented.
+- **Responsive Design:** Adapt the dark-themed interface for desktop, tablet, and mobile screens.
+- **Accessibility:** Use semantic HTML, accessible labels, visible focus indicators, and Escape-key dismissal for the user-details modal.
 
 ## Tech Stack
 
-- **React** — UI development
+- **React** — User interface
 - **TypeScript** — Static typing
 - **Redux Toolkit** — State management
-- **RTK Query** — API fetching, caching, and mutations
+- **RTK Query** — API requests, caching, and mutations
 - **Vite** — Development server and build tooling
-- **react-window** — List and grid virtualization
+- **react-window** — Grid virtualization
 - **Lucide React** — Icons
 - **CSS** — Styling and responsive layouts
 - **MockAPI** — User data API
@@ -39,21 +39,20 @@ A responsive, dark-mode user directory built with React, TypeScript, Redux Toolk
 
 The application uses the provided MockAPI service.
 
-**Base URL**
-
-`https://687124747ca4d06b34b97d3d.mockapi.io/api/`
+**Base URL:**  
+https://687124747ca4d06b34b97d3d.mockapi.io/api/
 
 ### Available Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
 | GET | `/userId` | Retrieve the user directory |
-| GET | `/userId/:id` | Retrieve a specific user by ID |
+| GET | `/userId/:id` | Retrieve an individual user by ID |
 | POST | `/userId` | Create a new user |
 
 ### Create User Request
 
-The create-user request sends the following fields:
+The create-user request sends a JSON body containing the following fields:
 
 ```json
 {
@@ -63,13 +62,13 @@ The create-user request sends the following fields:
 }
 ```
 
-The example values are for testing only.
+The values above are examples for testing only.
 
 ## Getting Started
 
 ### Prerequisites
 
-Install the following tools before running the project:
+Install the following tools:
 
 - [Node.js](https://nodejs.org/)
 - npm, which is included with Node.js
@@ -94,9 +93,9 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. It is typically:
+Open the local URL printed by Vite. The default address is usually:
 
-`http://localhost:5173/`
+http://localhost:5173/
 
 ### 4. Build for Production
 
@@ -104,7 +103,7 @@ Open the local URL printed by Vite. It is typically:
 npm run build
 ```
 
-This command runs the TypeScript project build and generates the production assets in the `dist` directory.
+This command runs the TypeScript build and generates the production assets in the `dist` directory.
 
 ### 5. Preview the Production Build
 
@@ -116,7 +115,7 @@ Open the local URL printed by Vite to inspect the production build.
 
 ## Project Structure
 
-The project is organized into application state, reusable UI components, and user-related API functionality.
+The application is organized into reusable components, application state, and user-related API functionality.
 
 ```text
 user-directory/
@@ -149,33 +148,33 @@ user-directory/
 
 ## Deployment
 
-The application is deployed on Vercel.
+The application is hosted on Vercel.
 
-**Live application:** https://user-directory-three-lovat.vercel.app/
+**Live application:** [https://user-directory-three-lovat.vercel.app/](https://user-directory-three-lovat.vercel.app/)
 
 To deploy your own copy:
 
 1. Import the GitHub repository into [Vercel](https://vercel.com/).
-2. Select **Vite** as the framework preset.
+2. Select Vite as the framework preset, if it is not detected automatically.
 3. Set the build command to `npm run build`.
 4. Set the output directory to `dist`.
 5. Deploy the application.
 
-When the GitHub repository is connected to Vercel, new commits pushed to the configured production branch can trigger automatic deployments.
+When the repository is connected to Vercel, pushes to the configured production branch can trigger automatic deployments.
 
 ## Assumptions and Implementation Notes
 
-- The provided MockAPI endpoint is the source of user data.
-- Search is performed on the client side against the users loaded by the application.
-- Existing user records may not include every optional detail, such as phone number, location, or date of birth.
-- New user records use the `name`, `location`, and `dob` fields specified in the challenge.
-- The application uses the API's existing data structure and does not require a separate backend service.
+- The supplied MockAPI endpoint is the source of user data.
+- Search is performed on the client side against the users loaded by the application and supports name and email matching.
+- Some existing user records may not include optional details such as phone number, location, or date of birth.
+- New user records are submitted using the `name`, `location`, and `dob` fields specified in the challenge.
+- The application uses the existing API data structure and does not require a separate backend service.
 - Authentication and user permissions are outside the scope of this assessment.
-- The interface follows the supplied Figma design as the visual reference, with responsive layouts for different screen sizes.
+- The supplied Figma design is the visual reference for the interface. Responsive CSS is used to adapt the layout to different screen sizes.
 
 ## Author
 
 **Eyesightworks**
 
-- **GitHub:** https://github.com/eyesightworks
-- **Portfolio:** https://eyesightworks.github.io/eyesight-skills/
+- **GitHub:** [eyesightworks](https://github.com/eyesightworks)
+- **Portfolio:** [Eyesightworks Portfolio](https://eyesightworks.github.io/eyesight-skills/)
