@@ -112,3 +112,10 @@ To deploy your own copy:
 
 - GitHub: https://github.com/eyesightworks
 - Portfolio: https://eyesightworks.github.io/eyesight-skills/
+## Assumptions
+
+- The provided MockAPI endpoint is the source of user data.
+- Search filters the users already loaded from the API.
+- Some existing user records may not contain phone numbers, locations, or dates of birth.
+- New users are created using the name, location, and date-of-birth fields specified in the challenge.
+- Authentication and user permissions are outside the scope of this assessment.
