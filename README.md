@@ -1,17 +1,22 @@
-
 # User Directory
 
-A responsive user directory built with React, TypeScript, Redux Toolkit, and Vite. Browse profiles, search by name, view detailed user information, and add new users through an API.
+A responsive user directory built with React, TypeScript, Redux Toolkit, and Vite. Browse user profiles, search by name, view detailed information, and create new users through an API.
+
+## Live Demo
+
+**Live Website:** https://user-directory-three-lovat.vercel.app/
+
+**GitHub Repository:** https://github.com/eyesightworks/user-directory
 
 ## Features
 
-- **User directory:** Fetch and display users from the API.
+- **User Directory:** Fetch and display users from the API.
 - **Search:** Filter users by name on the client side.
-- **User details:** Open a profile modal showing available email, phone, location, and date of birth information.
-- **Create users:** Submit a new user's name, location, and date of birth.
-- **Virtualized list:** Render visible user cards efficiently with `react-window`.
-- **Loading and error states:** Show loading feedback and retry options when requests fail.
-- **Responsive design:** Dark-mode interface designed for desktop and mobile screens.
+- **User Details:** Open a profile modal showing available email, phone, location, and date-of-birth information.
+- **Create Users:** Submit a new user's name, location, and date of birth.
+- **Virtualized Grid:** Render user cards efficiently using `react-window`.
+- **Loading and Error States:** Display loading feedback and error messages with retry options.
+- **Responsive Design:** Dark-themed interface designed for desktop and mobile screens.
 - **Accessibility:** Semantic elements, accessible labels, keyboard dismissal of the profile modal, and visible focus indicators.
 
 ## Tech Stack
@@ -24,27 +29,32 @@ A responsive user directory built with React, TypeScript, Redux Toolkit, and Vit
 - react-window
 - CSS
 
-## API
+## API Integration
 
-The application uses the following MockAPI endpoints:
-
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| GET | `/api/userId` | Retrieve all users |
-| GET | `/api/userId/:id` | Retrieve one user |
-| POST | `/api/userId` | Create a user |
+The application uses the following MockAPI endpoints.
 
 Base URL:
 
 `https://687124747ca4d06b34b97d3d.mockapi.io/api/`
 
-The create-user request sends `name`, `location`, and `dob`.
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/userId` | Retrieve all users |
+| GET | `/userId/:id` | Retrieve a specific user |
+| POST | `/userId` | Create a new user |
+
+The create-user request sends the following fields:
+
+- `name`
+- `location`
+- `dob`
 
 ## Getting Started
 
 ### Requirements
 
-- Node.js and npm
+- Node.js
+- npm
 - Git
 
 ### Installation
@@ -68,13 +78,17 @@ Start the development server:
 npm run dev
 ```
 
-### Production build
+Vite will provide a local URL, typically `http://localhost:5173/`.
+
+### Production Build
+
+Build the application:
 
 ```bash
 npm run build
 ```
 
-Preview the production build:
+Preview the production build locally:
 
 ```bash
 npm run preview
@@ -82,7 +96,9 @@ npm run preview
 
 ## Deployment
 
-This project can be deployed to a static hosting provider such as Vercel.
+This project is deployed on Vercel.
+
+To deploy your own copy:
 
 1. Import the GitHub repository into Vercel.
 2. Select Vite as the framework preset.
@@ -90,6 +106,9 @@ This project can be deployed to a static hosting provider such as Vercel.
 4. Set the output directory to `dist`.
 5. Deploy the application.
 
-## Repository
+## Author
 
-[GitHub — User Directory](https://github.com/eyesightworks/user-directory)
+**Eyesightworks**
+
+- GitHub: https://github.com/eyesightworks
+- Portfolio: https://eyesightworks.github.io/eyesight-skills/
