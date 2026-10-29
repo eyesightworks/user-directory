@@ -1,0 +1,142 @@
+
+import { useMemo, useState } from "react";
+import { Users, UserRound, RefreshCw } from "lucide-react";
+import { useGetUsersQuery } from "./features/users/usersApi";
+import type { User } from "./features/users/userTypes";
+import UserCard from "./components/UserCard";
+import SearchBar from "./components/SearchBar";
+import UserDetailsModal from "./components/UserDetailsModal";
+import LoadingState from "./components/LoadingState";
+import ErrorState from "./components/ErrorState";
+
+export default function App() {
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+    refetch,
+    isFetching,
+  } = useGetUsersQuery();
+
+  const [search, setSearch] = useState("");
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+  const filteredUsers = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    if (!query) return users;
+
+    return users.filter((user) =>
+      (user.name ?? "").toLowerCase().includes(query)
+    );
+  }, [users, search]);
+
+  return (
+    <main className="app-shell">
+      <header className="topbar">
+        <a className="brand" href="/" aria-label="User Directory home">
+          <span className="brand-icon">
+            <Users size={21} />
+          </span>
+          <span>
+            User<span className="brand-accent">Directory</span>
+          </span>
+        </a>
+
+        <span className="topbar-label">
+          <span className="status-dot" />
+          Directory
+        </span>
+      </header>
+
+      <section className="page-content">
+        <div className="page-heading">
+          <div>
+            <p className="eyebrow">PEOPLE &amp; PROFILES</p>
+            <h1>User Directory</h1>
+            <p className="page-description">
+              Browse and discover people in your directory.
+            </p>
+          </div>
+
+          <div className="user-count">
+            <UserRound size={17} />
+            <span>{users.length} users</span>
+          </div>
+        </div>
+
+        <div className="toolbar">
+          <SearchBar value={search} onChange={setSearch} />
+
+          <button
+            className="refresh-button"
+            type="button"
+            onClick={() => refetch()}
+            disabled={isFetching}
+          >
+            <RefreshCw
+              size={16}
+              className={isFetching ? "spinning" : ""}
+            />
+            Refresh
+          </button>
+        </div>
+
+        {isLoading ? (
+          <LoadingState />
+        ) : isError && users.length === 0 ? (
+          <ErrorState onRetry={() => refetch()} />
+        ) : (
+          <>
+            <div className="results-heading">
+              <h2>{search ? "Search results" : "All users"}</h2>
+              <span>{filteredUsers.length} found</span>
+            </div>
+
+            {filteredUsers.length > 0 ? (
+              <div className="user-grid">
+                {filteredUsers.map((user) => (
+                  <UserCard
+                    key={user.id}
+                    user={user}
+                    onClick={setSelectedUser}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <div className="empty-icon">
+                  <Users size={25} />
+                </div>
+                <h3>No users found</h3>
+                <p>Try another name or clear your search.</p>
+
+                {search && (
+                  <button
+                    className="primary-button"
+                    type="button"
+                    onClick={() => setSearch("")}
+                  >
+                    Clear search
+                  </button>
+                )}
+              </div>
+            )}
+          </>
+        )}
+
+        <footer className="page-footer">
+          <span>User Directory</span>
+          <span>Built with React, TypeScript &amp; Redux Toolkit</span>
+        </footer>
+      </section>
+
+      {selectedUser && (
+        <UserDetailsModal
+          user={selectedUser}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
+    </main>
+  );
+}
