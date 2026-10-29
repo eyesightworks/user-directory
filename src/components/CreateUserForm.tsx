@@ -7,11 +7,14 @@ interface CreateUserFormProps {
   onClose: () => void;
 }
 
-export default function CreateUserForm({ onClose }: CreateUserFormProps) {
+export default function CreateUserForm({
+  onClose,
+}: CreateUserFormProps) {
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [dob, setDob] = useState("");
-  const [createUser, { isLoading, isError, error }] =
+
+  const [createUser, { isLoading, isError }] =
     useCreateUserMutation();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -26,7 +29,7 @@ export default function CreateUserForm({ onClose }: CreateUserFormProps) {
 
       onClose();
     } catch {
-      // RTK Query exposes the error through isError.
+      // The error message is displayed using isError below.
     }
   }
 
@@ -59,6 +62,7 @@ export default function CreateUserForm({ onClose }: CreateUserFormProps) {
           <span className="brand-icon">
             <UserPlus size={21} />
           </span>
+
           <h2 id="create-user-title">Add a new user</h2>
           <p>Enter the person's details below.</p>
         </div>
