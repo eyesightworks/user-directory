@@ -1,10 +1,11 @@
 
 import { useMemo, useState } from "react";
-import { Users, UserRound, RefreshCw } from "lucide-react";
+import { Users, UserRound, RefreshCw, UserPlus } from "lucide-react";
 import { useGetUsersQuery } from "./features/users/usersApi";
 import type { User } from "./features/users/userTypes";
 import SearchBar from "./components/SearchBar";
 import UserDetailsModal from "./components/UserDetailsModal";
+import CreateUserForm from "./components/CreateUserForm";
 import LoadingState from "./components/LoadingState";
 import ErrorState from "./components/ErrorState";
 import VirtualizedUserGrid from "./components/VirtualizedUserGrid";
@@ -20,6 +21,7 @@ export default function App() {
 
   const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   const filteredUsers = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -80,6 +82,15 @@ export default function App() {
             />
             Refresh
           </button>
+
+          <button
+            className="add-user-button"
+            type="button"
+            onClick={() => setShowCreateForm(true)}
+          >
+            <UserPlus size={17} />
+            Add user
+          </button>
         </div>
 
         {isLoading ? (
@@ -131,6 +142,10 @@ export default function App() {
           user={selectedUser}
           onClose={() => setSelectedUser(null)}
         />
+      )}
+
+      {showCreateForm && (
+        <CreateUserForm onClose={() => setShowCreateForm(false)} />
       )}
     </main>
   );
